@@ -1,24 +1,19 @@
 terraform {
   required_providers {
-    docker = {
-      source  = "kreuzwerker/docker"
-      version = "~> 2.13.0"
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
     }
   }
 }
 
-provider "docker" {}
-
-resource "docker_image" "nginx" {
-  name         = "nginx:latest"
-  keep_locally = false
+# Configure the AWS Provider
+provider "aws" {
+  region = "us-west-2"
 }
 
-resource "docker_container" "nginx" {
-  image = docker_image.nginx.latest
-  name  = "tutorial"
-  ports {
-    internal = 80
-    external = 8000
-  }
+resource "aws_instance" "this" {
+  ami                     = "ami-0df24e148fdb9f1d8"  # amazon linux default
+  instance_type           = "t2.micro"
 }
+
