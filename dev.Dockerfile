@@ -1,7 +1,8 @@
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y gnupg software-properties-common wget && \
-    wget -O- https://apt.releases.hashicorp.com/gpg | \
+RUN apt-get update && apt-get install -y gnupg software-properties-common wget unzip
+
+RUN wget -O- https://apt.releases.hashicorp.com/gpg | \
     gpg --dearmor | \
     tee /usr/share/keyrings/hashicorp-archive-keyring.gpg && \
     gpg --no-default-keyring \
@@ -14,3 +15,7 @@ RUN apt-get update && apt-get install -y gnupg software-properties-common wget &
     apt-get install terraform && \
     terraform -install-autocomplete && \ 
     apt autoclean
+
+RUN wget -O "awscliv2.zip" "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" && \
+    unzip awscliv2.zip && \
+    ./aws/install
