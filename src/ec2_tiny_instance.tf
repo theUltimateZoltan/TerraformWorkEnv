@@ -25,6 +25,15 @@ resource "aws_instance" "test-instance" {
   }
 }
 
+resource "null_resource" "wait-for-ec2-provision" {
+  depends_on = [
+    aws_instance.test-instance
+  ]
+  provisioner "local-exec" {
+    command = "aws ec2 wait instance-status-ok --instance-ids ${ aws_instance.test-instance.id }"
+  }
+}
+
 resource "aws_key_pair" "test_instance_ssh_key" {
   key_name   = "deployer"
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMMHlD78dRaVFRbRYzZOou4raU6wRXn8naAA7dFEivPOR9g3kdFakHF4MsBor1hq7CVVBpc6IwptN110ksg3g/ZZkieggIRf7XgM7tlH3wBAuv3Ob+zRaCcXhqSW01vVGFks23LdL/+nZGHMNoUoV5Ez4p84TOhYh86qQACh/dwc8NU8zC2oG9NKNBVHbUHvLXHfKcjm8vhyHxErgx1KEqz2XPKh6E9GQpUViVij4eHPLVBWZ6g3m0avtQ3QV1xi434D8WJgNnduYNcewiG1BeqSzET5vbJec+7DAFKoRKDQj112AaNkjc5GgYmUJNoApWVni77AS8RTRRzCOsVdpJ eladlevy@DESKTOP-DILUMTC"
