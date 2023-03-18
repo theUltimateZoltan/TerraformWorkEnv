@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: dev.Dockerfile
     volumes:
-      - ./src:/app
+      - ../Realms/src/infra:/app
       - /var/run/docker.sock:/var/run/docker.sock
       - ${HOME}/.aws:/root/.aws
     working_dir: /app
