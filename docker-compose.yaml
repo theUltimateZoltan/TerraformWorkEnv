@@ -6,6 +6,8 @@ services:
       dockerfile: dev.Dockerfile
     volumes:
       - ../Realms/src/infra:/app
+      - ../Realms/src/realm_data:/app/realm_data
+      - ../Realms/src/logic:/app/logic
       - /var/run/docker.sock:/var/run/docker.sock
       - ${HOME}/.aws:/root/.aws
     working_dir: /app
